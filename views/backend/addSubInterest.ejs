@@ -1,0 +1,74 @@
+<%- include('./includes/head.ejs')%>
+    <link rel="stylesheet" href="/frontend/css/admin.css">
+    </head>
+
+    <body>
+        <%- include('./includes/navigation.ejs')%>
+            <main>
+                <%if(errorMsg){%>
+                    <div class="text-center">
+                        <div class="alert alert-danger mb-3 ">
+                            <%=errorMsg%>
+                        </div>
+                    </div>
+                    <%}%>
+                        <div class="text-center">
+                            <div class="add-subInterest">
+                                <form class="container" id="add-subInterest" method="POST"
+                                    action="/admin/add-sub-category">
+                                    <div class="form-group">
+                                        <select name="interest" id="interest">
+                                            <option value="" selected disabled>Choose One ...</option>
+                                            <%interest.forEach(i=>{%>
+                                                <option value="<%=i._id%>">
+                                                    <%=i.category.toUpperCase()%>
+                                                </option>
+                                                <%})%>
+                                        </select>
+                                        <small class="text-danger hide">Please Select a Category</small>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input class="interest" name="subFields" id="subFields"
+                                            placeholder="Enter Sub Categories">
+                                        <small class="text-danger hide">Please! Enter Some Sub-Categories</small>
+                                    </div>
+                                    <input type="hidden" name="_csrf" id="_csrf" value="<%= csrfToken %>">
+                                    <br>
+                                    <div class="text-center">
+                                        <button class="btn btn-dark" type="submit">Add Subs
+                                            <i class="fas fa-plus-circle"></i></button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="d-grid"> </div>
+            </main>
+
+
+            <script>
+                const interest = document.querySelector('#interest');
+                interest.addEventListener('change', (e) => {
+                    const interestId = e.target.value
+                    fetch(`/admin/find-sub-interest/${interestId}`, {
+                        method: 'GET',
+                        headers: { 'Content-type': 'application/json' },
+                    })
+                        .then((res) => res.json())
+                        .then((data) => {
+                            const container = document.querySelector('.d-grid');
+                            container.innerHTML = null;
+                            if (data.subInterestColl.length > 0) {
+                                data.subInterestColl.forEach(el => {
+                                    container.innerHTML += `<a href="${el._id}" class="btn btn-primary">
+                                    ${el.subInterest.toUpperCase()}
+                                    </a>`
+                                });
+                            }
+                        })
+                })
+            </script>
+    </body>
+
+    </html>

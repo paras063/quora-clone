@@ -1,0 +1,38 @@
+@import 'shared/variables';
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+main {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+small {
+  font-weight: 900;
+}
+
+#add-question > section {
+  width: 600px;
+  height: 700px;
+  input,
+  textarea {
+    border: 1px solid #424242;
+    // border: none;
+    border-radius: 0.3rem;
+    background-color: #fff;
+  }
+}
+
+#add-question > .select-item-list--single {
+  input,
+  select {
+    border: none;
+  }
+}

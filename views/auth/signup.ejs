@@ -1,0 +1,108 @@
+<%- include('../includes/head.ejs') %>
+    <style>
+        body {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+    </head>
+
+    <body class="bg-gradient">
+        <main class="">
+            <h1 class="text-center text-light">LOGO</h1>
+            <br>
+            <div id="signupPage">
+                <section class="bg-light shadow-lg">
+                    <h3 class="text-center heading">Signup Here</h3>
+                    <div class="divider"></div>
+                    <div class="alert alert-danger" style="display: none;"></div>
+                    <div class="alert alert-success" style="display: none;"></div>
+                    <form id="registerationForm" action="/signup'" method="POST" class="container">
+                        <div class="form-group ">
+                            <label for="name">Name</label>
+                            <input type="text" name="name" id="name" value="<%= oldInput.name %>"  required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">E-Mail</label>
+                            <input type="email" name="email" id="email" value="<%= oldInput.email %>" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" name="password" id="password" value="<%= oldInput.password %>"
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm Password</label>
+                            <input type="password" name="confirmPassword" id="confirmPassword"
+                                value="<%= oldInput.confirmPassword %>" required>
+                        </div>
+                        <div class="form-group-inline">
+                            <input class="" type="checkbox" onclick="togglePass()" value="" id="defaultCheck1">
+                            <label class="form-check-label" for="defaultCheck1">
+                                Show Password
+                            </label>
+                        </div>
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <br>
+                        <div class="text-center">
+                            <button class="btn btn-primary mb-3" type="submit">Signup <i
+                                    class="fas fa-user-plus "></i></button>
+                            <br><br>
+                            <p class="">Already have a Account ? <span><a href="/login"
+                                        class="text-decoration-none">Login
+                                        Here</a></span></p>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </main>
+        <script src="/js/utility.js"></script>
+        <script>
+
+            const errorMsg = document.querySelector('.alert.alert-danger')
+            const successMsg = document.querySelector('.alert.alert-success')
+            document.getElementById('registerationForm').addEventListener('submit', e => {
+                e.preventDefault();
+
+                // alert User To Wait
+                successMsg.classList.add('alert-success')
+                successMsg.textContent = 'Signing You Up !'
+                successMsg.style.display = 'block'
+                errorMsg.style.display = 'none'
+
+                const name = document.querySelector('#name').value;
+                const email = document.querySelector('#email').value;
+                const password = document.querySelector('#password').value;
+                const confirmPassword = document.querySelector('#confirmPassword').value;
+                const _csrf = document.querySelector('input[name="_csrf"]').value
+
+                fetch('/signup', {
+                    method: 'POST',
+                    headers: { 'Content-type': 'application/json' },
+                    body: JSON.stringify({ name, email, password, confirmPassword, _csrf })
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success && !data.dataEntered) {
+                            successMsg.style.display = 'none'
+                            errorMsg.textContent = data.errorMessage;
+                            errorMsg.style.display = 'block'
+                            name = data.oldUrl.name
+                            email = data.oldUrl.email
+                            password = null
+                            confirmPassword = null
+                        }
+                        if (!data.success) {
+                            successMsg.style.display = 'none'
+                            errorMsg.textContent = data.msg;
+                            errorMsg.style.display = 'block'
+                        } else {
+                            return location = `${window.location.origin}/notify`
+                        }
+                    });
+            });
+        </script>
