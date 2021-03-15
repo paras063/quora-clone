@@ -10,7 +10,8 @@
                 <button type="submit" class="btn btn-primary"><i class="fas fa-search "></i> Search</button>
             </form>
         </div>
-        <a href="/add-question" class="btn btn-primary"><i class="fas fa-question-circle fa-lg"></i> Add Question</a>
+        <a href="/add-question" class="btn btn-primary btn-cta"><i class="fas fa-question-circle fa-lg"></i> Add
+            Question</a>
         <div class="userAction">
             <i class="fas fa-user fa-lg text-primary"><i class="fas fa-caret-down"></i></i>
         </div>
@@ -19,7 +20,20 @@
 
     <!--    Mobile Navbar Starts   -->
     <nav id="mobile-nav">
-        <a href="/" class="nav-brand">LOGO</a>
+        <div id="mobile-nav__header">
+            <div class="mobile-nav__btn">Menu</div>
+            <a href="/" class="nav-brand">LOGO</a>            
+            <a href="/add-question" class="btn-cta"><i class="fas fa-question-circle"></i></a>
+            <div class="userAction">
+                <i class="fas fa-user fa-lg text-primary"><i class="fas fa-caret-down"></i></i>
+            </div>
+        </div>
+        <div class="searchBar">
+            <form action="" method="get">
+                <input type="text" placeholder="Search Here">
+                <button type="submit" class="btn-sm btn-primary">Search</button>
+            </form>
+        </div>
     </nav>
     <!--    Mobile Navbar Ends   -->
 </header>
