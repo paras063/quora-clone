@@ -1,16 +1,16 @@
 // ---------------   Models  ---------------
-const User = require('./models/user');
+const User = require("./models/user");
 
 // ---------------   Module Imports  ---------------
-const path = require('path');
-const express = require('express');
-const mongoose = require('mongoose');
-const session = require('express-session');
-const MongoDBStore = require('connect-mongodb-session')(session);
-const csrf = require('csurf');
-const flash = require('connect-flash');
-const dotenv = require('dotenv');
-const errorController = require('./controllers/error');
+const path = require("path");
+const express = require("express");
+const mongoose = require("mongoose");
+const session = require("express-session");
+const MongoDBStore = require("connect-mongodb-session")(session);
+const csrf = require("csurf");
+const flash = require("connect-flash");
+const dotenv = require("dotenv");
+const errorController = require("./controllers/error");
 
 // Config Environment Variables
 dotenv.config();
@@ -23,25 +23,25 @@ const app = express();
 
 const store = new MongoDBStore({
   uri: MONGODB_URI,
-  collection: 'sessions',
+  collection: "sessions",
 });
 
 // Templating Engine Set
-app.set('view engine', 'ejs');
-app.set('views', 'views');
+app.set("view engine", "ejs");
+app.set("views", "views");
 
 // Parsing Content
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // Static Files Folder
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
 
 // Session
-app.set('trust proxy', 1); // trust first proxy
+app.set("trust proxy", 1); // trust first proxy
 app.use(
   session({
-    secret: 'First App To Implement Sessions',
+    secret: "First App To Implement Sessions",
     resave: false,
     saveUninitialized: false,
     store: store,
@@ -80,39 +80,39 @@ app.use((req, res, next) => {
 });
 
 // Auth Routes
-const authRoutes = require('./routes/auth');
-const homeRoutes = require('./routes/home');
-const quesRoutes = require('./routes/ques');
-const adminRoutes = require('./routes/admin');
+const authRoutes = require("./routes/auth");
+const homeRoutes = require("./routes/home");
+const quesRoutes = require("./routes/ques");
+const adminRoutes = require("./routes/admin");
 
 app.use(homeRoutes, authRoutes, quesRoutes);
-app.use('/admin', adminRoutes);
+app.use("/admin", adminRoutes);
 
 // Error Routes
-app.get('/500', errorController.get500);
+app.get("/500", errorController.get500);
 app.use(errorController.get404);
 
 // Error Controller
 app.use((err, req, res) => {
   console.error(err.stack);
-  res.status(500).render('500', {
-    pageTitle: 'Error!',
-    path: '/500',
+  res.status(500).render("500", {
+    pageTitle: "Error!",
+    path: "/500",
     error: err,
     isAuthenticated: req.session ? req.session.isLoggedIn : false,
   });
 });
 
 // Server Running
-(async () => {
-  try {
-    const result = await mongoose.connect(MONGODB_URI, {
-      useUnifiedTopology: true,
-      useNewUrlParser: true,
-      useCreateIndex: true,
-    });
+mongoose
+  .connect(MONGODB_URI, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useCreateIndex: true,
+  })
+  .then((result) => {
     if (!result) {
-      console.log('NotConnected!');
+      console.log("NotConnected!");
     } else {
       const PORT = process.env.PORT || 8000;
       app.listen(PORT, () => {
@@ -121,7 +121,7 @@ app.use((err, req, res) => {
         );
       });
     }
-  } catch (err) {
+  })
+  .catch((err) => {
     console.log(err);
-  }
-})();
+  });
