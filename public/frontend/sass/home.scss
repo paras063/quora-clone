@@ -1,6 +1,6 @@
 @import 'shared/variables';
 
-body{
+body {
   background-color: darken($color: $light-color, $amount: 1);
 }
 /*  ---------------   Showcase  --------------- */
@@ -61,7 +61,7 @@ body{
         font-size: 1.7rem;
       }
     }
-    .searchBar{
+    .searchBar {
       transform: scale(0.8);
     }
   }
@@ -80,7 +80,7 @@ body{
     position: sticky;
     top: 1rem;
     ul {
-      list-style: none;      
+      list-style: none;
       padding: 0 0.5rem;
       width: 90%;
       margin: auto;
@@ -117,7 +117,7 @@ body{
     }
   }
 
-  #question {    
+  #question {
     width: 100%;
     padding: 1rem;
     margin: 1rem;
@@ -151,6 +151,9 @@ body{
         display: flex;
         justify-content: space-around;
         align-items: center;
+        #bookmark-ques i {
+          cursor: pointer;
+        }
       }
     }
     @media (min-width: 1300px) {
@@ -178,13 +181,10 @@ body{
       }
     }
     @media (max-width: 860px) {
-      width: 100%;      
+      width: 100%;
       .ques {
         font-size: 1rem;
       }
     }
   }
-  // @media (max-width: 860px) {
-  //   display: block;
-  // }
 }

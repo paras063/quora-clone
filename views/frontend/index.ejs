@@ -25,7 +25,9 @@
                     <div id="interests">
                         <ul>
                             <%for(let i of interest) {%>
-                                <li><a href="<%=i._id%>"><%=i.category.toUpperCase()%></a></li>
+                                <li><a href="<%=i._id%>">
+                                        <%=i.category.toUpperCase()%>
+                                    </a></li>
                                 <%}%>
                         </ul>
                         <!-- <div class="text-center">
@@ -36,30 +38,43 @@
 
                     <div id="question" class="">
                         <%for (const q of questions){%>
-                        <div id="question-block" class="shadow">
-                            <div class="ques">
-                                <a href="<%=q._id%>" class=""><%=q.title%></a>
+                            <div id="question-block" class="shadow">
+                                <div class="ques">
+                                    <a href="<%=q._id%>" class="">
+                                        <%=q.title%>
+                                    </a>
+                                </div>
+                                <ul>
+                                    <%for (const i of q.interests){%>
+                                        <li><a href="" class="tag">
+                                                <%=i.toUpperCase()%>
+                                            </a></li>
+                                        <%}%>
+                                </ul>
+                                <div class="cta-ques mt-3">
+                                    <a href="" class="btn-sm btn-danger"><i class="far fa-lightbulb fa-lg"></i> Lets
+                                        Answer</a>
+
+                                    <div id="bookmark-ques">
+                                        <i class="far fa-bookmark fa-2x"></i>
+                                        <i class="fas fa-bookmark fa-2x hide"></i>
+                                        <div hidden>
+                                            <%=q._id%>
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
-                            <ul>
-                                <%for (const i of q.interests){%>
-                                <li><a href="" class="tag"><%=i.toUpperCase()%></a></li>
-                                <%}%>
-                            </ul>
-                            <div class="cta-ques mt-3">
-                                <a href="" class="btn-sm btn-danger"><i class="far fa-lightbulb fa-lg"></i> Lets
-                                    Answer</a>
-                                <a href="" class=""><i class="far fa-bookmark fa-2x"></i></a>
-                            </div>
-                        </div>
-                        <%}%>
-                        
+                            <%}%>
+
                     </div>
                 </section>
                 <!--    Question Answers Block Ends   -->
 
             </main>
             <%- include('../includes/footer.ejs')%>
+                <script src="/frontend/js/bookmark.js"></script>
 
     </body>
 
-    </html>    
+    </html>

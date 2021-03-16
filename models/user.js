@@ -12,6 +12,11 @@ const userSchema = new mongoose.Schema(
         interest: { type: mongoose.Schema.Types.ObjectId, ref: 'Interest' },
       },
     ],
+    bookmarks: [
+      {
+        quesId: { type: mongoose.Schema.Types.ObjectId, ref: 'Ques' },
+      },
+    ],
     activationToken: String,
     resetToken: String,
     resetTokenExpiration: Date,

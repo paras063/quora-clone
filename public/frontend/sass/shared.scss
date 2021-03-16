@@ -9,7 +9,7 @@
 /*  ---------------   Main Navbar  --------------- */
 
 #main-nav {
-  background: darken($color: #fff, $amount: 20);
+  background: $light-color;
   width: 100%;
   display: flex;
   justify-content: space-around;
@@ -37,7 +37,7 @@
         border-right: none;
         border-radius: 1rem 0 0 1rem;
         padding: 0.5rem 1.5rem;
-        background-color: darken($color: $light-color, $amount: 2);
+        background: darken($color: #fff, $amount: 10);
         outline: none;
         font-size: 1rem;
       }
@@ -47,9 +47,7 @@
     }
   }
   .userAction {
-    margin: auto 1rem;
-    padding: 1rem;
-    transform: scale(1.2);
+    cursor: pointer;
   }
   @media (max-width: 1200px) and (min-width: 860px) {
     .btn-cta,
@@ -67,7 +65,8 @@
 }
 /*  ---------------   Mobile Navbar  --------------- */
 #mobile-nav {
-  background: darken($color: #fff, $amount: 20);
+  display: none;
+  background-color: $light-color;
   padding-bottom: 1rem;
   > #mobile-nav__header {
     display: none;
@@ -103,11 +102,12 @@
       background-color: $primary-color;
       border-radius: 40%;
       padding: 0.2rem 0.5rem;
-      padding-top: 0.1rem;      
-    }    
-    .userAction{
-      transform: scale(1.1);
+      padding-top: 0.1rem;
+    }
+    .userAction {
+      font-size: 1.5rem;
       cursor: pointer;
+      color: $primary-color;
     }
     @media (max-width: 860px) {
       display: flex;
@@ -129,7 +129,7 @@
         border: none;
         border-right: none;
         padding: 0.3rem 1rem;
-        background-color: darken($color: $light-color, $amount: 2);
+        background: darken($color: #fff, $amount: 10);
         outline: none;
         font-size: 1rem;
       }
@@ -141,6 +141,9 @@
     @media (max-width: 860px) {
       display: block;
     }
+  }
+  @media (max-width: 860px) {
+    display: block;
   }
 }
 
