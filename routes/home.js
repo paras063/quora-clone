@@ -10,5 +10,6 @@ const router = express.Router();
 router.get('/', homeController.getHome);
 router.get('/search', homeController.searchQuery);
 router.get('/bookmark/:quesId', auth.isAuth, homeController.bookmarkQues);
+router.get('/question/:quesId', auth.isAuth, homeController.viewQues);
 
 module.exports = router;

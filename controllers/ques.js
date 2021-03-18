@@ -54,6 +54,7 @@ exports.postAddQues = async (req, res, next) => {
   }
 };
 
+
 //user view his own questions
 exports.viewAllQues = async (req, res) => {
   try {
@@ -68,22 +69,7 @@ exports.viewAllQues = async (req, res) => {
   }
 };
 
-//user view particular question
-exports.viewQues = async (req, res) => {
-  try {
-    const showQues = await Ques.findOne({
-      _id: req.params.id,
-      owner: req.user._id,
-    });
-    if (!showQues) {
-      console.log('not found');
-    } else {
-      console.log(showQues);
-    }
-  } catch (err) {
-    console.log(err);
-  }
-};
+
 
 //user update particular question
 exports.updateQues = async (req, res) => {

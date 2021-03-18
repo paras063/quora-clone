@@ -36,7 +36,6 @@ exports.searchQuery = async (req, res, next) => {
       },
       { title: true, interests: true, createdAt: true }
     ).lean();
-    console.log(questions);
     for (const q of questions) q.interests = q.interests.split(',');
     for (const q of questions) q.createdAt = convertDate(q.createdAt);
     res.render('frontend/questions', {
@@ -56,7 +55,7 @@ exports.searchQuery = async (req, res, next) => {
 exports.bookmarkQues = async (req, res, next) => {
   try {
     const quesId = req.params.quesId;
-    const ques = await Ques.findById(quesId);
+    const ques = await Ques.findById(quesId).lean();
     if (!ques) return;
     const bookmarkIndex = req.user.bookmarks.findIndex((b) => {
       return b.quesId.toString() === quesId.toString();
@@ -68,6 +67,24 @@ exports.bookmarkQues = async (req, res, next) => {
     }
     await req.user.save();
     return res.json({ bookmarked: 'done' });
+  } catch (err) {
+    const error = new Error(err);
+    error.httpStatusCode = 500;
+    return next(error);
+  }
+};
+
+exports.viewQues = async (req, res, next) => {
+  try {
+    const quesId = req.params.quesId;
+    const ques = await Ques.findById(quesId).lean();
+    if (!ques) return;
+    console.log(ques);
+    res.render('frontend/answers', {
+      pageTitle: ques.title,
+      path: '/',
+      ques,
+    });
   } catch (err) {
     const error = new Error(err);
     error.httpStatusCode = 500;
