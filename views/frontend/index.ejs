@@ -54,14 +54,19 @@
                                 <div class="cta-ques mt-3">
                                     <a href="" class="btn-sm btn-danger"><i class="far fa-lightbulb fa-lg"></i> Lets
                                         Answer</a>
-
-                                    <div id="bookmark-ques">
-                                        <i class="far fa-bookmark fa-2x"></i>
-                                        <i class="fas fa-bookmark fa-2x hide"></i>
-                                        <div hidden>
-                                            <%=q._id%>
+                                    <%if(!user){%>
+                                        <div id="bookmark-ques" class="">
+                                            <a href="/login">
+                                                <i class="far fa-bookmark fa-2x"></i>
+                                            </a>
                                         </div>
-                                    </div>
+                                        <%}else{%>
+                                            <div id="bookmark-ques" class="">
+                                                <i class="far fa-bookmark fa-2x"></i>
+                                                <i class="fas fa-bookmark fa-2x hide"></i>
+                                                <input type="hidden" name="quesId" id="quesId" value="<%=q._id%>">
+                                            </div>
+                                            <%}%>
 
                                 </div>
                             </div>
@@ -74,7 +79,6 @@
             </main>
             <%- include('../includes/footer.ejs')%>
                 <script src="/frontend/js/bookmark.js"></script>
-
     </body>
 
     </html>

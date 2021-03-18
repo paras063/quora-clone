@@ -1,0 +1,142 @@
+@import 'shared/variables';
+body {
+  background-color: darken($light-color, 5);
+}
+main {
+  min-height: 100vh;
+  min-width: 100vw;
+}
+
+#feeds {
+  display: flex;
+  align-items: flex-start;
+  width: 90%;
+}
+
+#interests {
+  width: 100%;
+  padding: 0.5rem;
+  min-height: 50vh;
+  background: linear-gradient(to top, darken(#d3cce3, 10), darken(#e9e4f0, 25));
+  margin: 0.5rem;
+  border-radius: 0.2rem;
+  position: sticky;
+  top: 1rem;
+  ul {
+    list-style: none;
+    width: 80%;
+    margin: auto;
+    a {
+      width: 100%;
+      text-align: center;
+      display: inline-block;
+      font-weight: 900;
+      font-size: 0.8rem;
+      margin: 0.5rem 0.1rem;
+      padding: 0.5rem 0.8rem;
+      background-color: #fff;
+      border-radius: 0.5rem;
+      color: $dark-color;
+    }
+  }
+
+  @media (min-width: 1300px) {
+    width: 15%;
+  }
+  @media (max-width: 1300px) and (min-width: 1060px) {
+    width: 25%;
+  }
+  @media (max-width: 1060px) and (min-width: 960px) {
+    width: 28%;
+  }
+  @media (max-width: 960px) and (min-width: 860px) {
+    width: 32%;
+  }
+  @media (max-width: 860px) {
+    display: none;
+  }
+}
+
+#question {
+  width: 100%;
+  padding: 1rem;
+  text-align: center;
+  #question-block {
+    border-radius: 0.3rem;
+    background-color: $light-color;
+    padding: 0.3rem 1rem;
+    margin-bottom: 0.8rem;
+    .ques {
+      text-align: left;
+      margin-bottom: 0.3rem;
+      padding: 0.5rem;
+      padding-top: 1rem;
+      font-size: 1.1rem;
+      font-family: $subheading-font;
+      a {
+        color: darken($dark-color, 0);
+        font-weight: bolder;
+      }
+    }
+    #ques-footer {
+      padding: 0.2rem 1.1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      > div {
+        font-weight: 900;
+        font-size: 0.8rem;
+        background-color: darken($color: $light-color, $amount: 5);
+        padding: 0.5rem 0.8rem;
+        border-radius: 1rem;
+      }
+      ul {
+        margin-top: 0.5rem;
+        list-style: none;
+        li {
+          display: inline-block;
+        }
+        .tag {
+          color: $light-color;
+          background-color: lighten($primary-color, 10);
+          font-size: 0.7rem;
+          font-weight: 900;
+          border-radius: 5rem;
+          padding: 5px 10px;
+          text-transform: uppercase;
+          text-align: center;
+        }
+      }
+    }
+  }
+  @media (min-width: 1300px) {
+    width: 85%;
+    .ques {
+      font-size: 1rem;
+    }
+  }
+  @media (max-width: 1300px) and (min-width: 1060px) {
+    width: 75%;
+    .ques {
+      font-size: 1rem;
+    }
+  }
+  @media (max-width: 1060px) and (min-width: 960px) {
+    width: 72%;
+    .ques {
+      font-size: 1rem;
+    }
+  }
+  @media (max-width: 960px) and (min-width: 860px) {
+    width: 68%;
+    .ques {
+      font-size: 1rem;
+    }
+  }
+  @media (max-width: 860px) {
+    width: 100%;
+    .ques {
+      font-size: 1rem;
+    }
+  }
+}

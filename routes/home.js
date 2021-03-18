@@ -9,6 +9,6 @@ const router = express.Router();
 // ---------------  Index  ---------------
 router.get('/', homeController.getHome);
 router.get('/search', homeController.searchQuery);
-router.get('/bookmark/:quesId',  homeController.bookmarkQues);
+router.get('/bookmark/:quesId', auth.isAuth, homeController.bookmarkQues);
 
 module.exports = router;

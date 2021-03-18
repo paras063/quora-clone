@@ -1,6 +1,7 @@
 /* -------- Models Import -------- */
 const Ques = require('../models/question');
 const Interest = require('../models/interest');
+const { convertDate } = require('../util/file');
 
 exports.getHome = async (req, res, next) => {
   try {
@@ -28,16 +29,22 @@ exports.getHome = async (req, res, next) => {
 exports.searchQuery = async (req, res, next) => {
   try {
     const s = req.query.s;
+    const interest = await Interest.find({}, { category: true }).lean();
     const questions = await Ques.find(
       {
         title: { $regex: '.*' + s + '.*' },
       },
-      { title: true }
-    );
+      { title: true, interests: true, createdAt: true }
+    ).lean();
+    console.log(questions);
+    for (const q of questions) q.interests = q.interests.split(',');
+    for (const q of questions) q.createdAt = convertDate(q.createdAt);
     res.render('frontend/questions', {
       pageTitle: 'Home',
       path: '/',
       questions,
+      interest,
+      s,
     });
   } catch (err) {
     const error = new Error(err);

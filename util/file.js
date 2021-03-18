@@ -25,6 +25,29 @@ exports.currDate = () => {
   return date;
 };
 
+// Provide Current Date
+exports.convertDate = (date) => {
+  const monthNames = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
+  return `
+  ${monthNames[date.getMonth()]}
+  ${date.getDate()}
+  ${date.getFullYear()}
+  `;
+};
+
 exports.getSubInterestArr = async () => {
   const result = await subInterest
     .find({}, { _id: false, subInterest: true })

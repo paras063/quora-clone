@@ -1,20 +1,29 @@
-const bookmarkQues = document.querySelector('#bookmark-ques');
-if (bookmarkQues) {
-  const notBookmarked = bookmarkQues.querySelector('i.far'),
-    bookmarked = bookmarkQues.querySelector('i.fas');
-  const saveBookmark = (e) => {
-    const quesId = bookmarkQues.querySelector('div').textContent;
-    fetch(`/bookmark/${quesId}`, {
-      method: 'GET',
-      headers: { 'Content-type': 'application/json' },
-    })
-      .then((res) => res.json())
-      .then(() => {
-        notBookmarked.classList.toggle('hide');
-        bookmarked.classList.toggle('hide');
-      });
-  };
+const bookmarks = document.querySelectorAll('#bookmark-ques');
+// let notBookmarked, bookmarked, quesId;
+if (bookmarks) {
+  for (const b of bookmarks) {
+    const notBookmarked = b.querySelector('i.far');
+    const bookmarked = b.querySelector('i.fas');
+    const quesId = b.querySelector('#quesId').value.trim();
+    bookmarked.addEventListener(
+      'click',
+      saveBookmark.bind(this, quesId, notBookmarked, bookmarked)
+    );
+    notBookmarked.addEventListener(
+      'click',
+      saveBookmark.bind(this, quesId, notBookmarked, bookmarked)
+    );
+  }
+}
 
-  notBookmarked.addEventListner('click', saveBookmark);
-  bookmarked.addEventListner('click', saveBookmark);
+function saveBookmark(quesId, notBookmarked, bookmarked) {
+  fetch(`/bookmark/${quesId}`, {
+    method: 'GET',
+    headers: { 'Content-type': 'application/json' },
+  })
+    .then((res) => res.json())
+    .then(() => {
+      notBookmarked.classList.toggle('hide');
+      bookmarked.classList.toggle('hide');
+    });
 }
