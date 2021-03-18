@@ -1,7 +1,7 @@
 /* -------- Models Import -------- */
-const Ques = require('../models/question');
-const Interest = require('../models/interest');
-const { convertDate } = require('../util/file');
+const Ques = require("../models/question");
+const Interest = require("../models/interest");
+const { convertDate } = require("../util/file");
 
 exports.getHome = async (req, res, next) => {
   try {
@@ -11,11 +11,11 @@ exports.getHome = async (req, res, next) => {
       { title: true, interests: true }
     ).lean();
     for (const q of questions) {
-      q.interests = q.interests.split(',');
+      q.interests = q.interests.split(",");
     }
-    res.render('frontend/index', {
-      pageTitle: 'Home',
-      path: '/',
+    res.render("frontend/index", {
+      pageTitle: "Home",
+      path: "/",
       interest,
       questions,
     });
@@ -32,15 +32,15 @@ exports.searchQuery = async (req, res, next) => {
     const interest = await Interest.find({}, { category: true }).lean();
     const questions = await Ques.find(
       {
-        title: { $regex: '.*' + s + '.*' },
+        title: { $regex: ".*" + s + ".*" },
       },
       { title: true, interests: true, createdAt: true }
     ).lean();
-    for (const q of questions) q.interests = q.interests.split(',');
+    for (const q of questions) q.interests = q.interests.split(",");
     for (const q of questions) q.createdAt = convertDate(q.createdAt);
-    res.render('frontend/questions', {
-      pageTitle: 'Home',
-      path: '/',
+    res.render("frontend/questions", {
+      pageTitle: "Home",
+      path: "/",
       questions,
       interest,
       s,
@@ -66,7 +66,7 @@ exports.bookmarkQues = async (req, res, next) => {
       req.user.bookmarks.push({ quesId });
     }
     await req.user.save();
-    return res.json({ bookmarked: 'done' });
+    return res.json({ bookmarked: "done" });
   } catch (err) {
     const error = new Error(err);
     error.httpStatusCode = 500;
@@ -77,13 +77,20 @@ exports.bookmarkQues = async (req, res, next) => {
 exports.viewQues = async (req, res, next) => {
   try {
     const quesId = req.params.quesId;
-    const ques = await Ques.findById(quesId).lean();
+    const ques = await Ques.findById(quesId, {
+      title: true,
+      body: true,
+      //owner: true,
+      interests: true,
+      createdAt: true,
+    }).lean();
     if (!ques) return;
-    console.log(ques);
-    res.render('frontend/answers', {
+    ques.interests = ques.interests.split(",");
+    ques.createdAt = convertDate(ques.createdAt);
+    res.render("frontend/answers", {
       pageTitle: ques.title,
-      path: '/',
-      ques,
+      path: "/",
+      ques: ques,
     });
   } catch (err) {
     const error = new Error(err);
