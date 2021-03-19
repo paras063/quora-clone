@@ -83,6 +83,7 @@ exports.viewQues = async (req, res, next) => {
       //owner: true,
       interests: true,
       createdAt: true,
+      answers: true,
     }).lean();
     if (!ques) return;
     ques.interests = ques.interests.split(",");
