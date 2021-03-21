@@ -86,13 +86,39 @@ exports.viewQues = async (req, res, next) => {
       answers: true,
     }).lean();
     if (!ques) return;
+    const interest = await Interest.find({}, { category: true }).lean();
     ques.interests = ques.interests.split(",");
     ques.createdAt = convertDate(ques.createdAt);
     res.render("frontend/answers", {
       pageTitle: ques.title,
       path: "/",
       ques: ques,
+      interest,
     });
+  } catch (err) {
+    const error = new Error(err);
+    error.httpStatusCode = 500;
+    return next(error);
+  }
+};
+
+exports.followInterest = async (req, res, next) => {
+  try {
+    const interestId = req.params.interestId;
+    const interest = await Interest.findById(interestId);
+    const interestIndex = req.user.interestAreas.findIndex((b) => {
+      return b.interestId === interestId.toString();
+    });    
+    if (interestIndex !== -1) {
+      req.user.interestAreas.splice(interestIndex, 1);
+      interest.following -= 1;
+    } else {
+      req.user.interestAreas.push({ interestId });
+      interest.following += 1;
+    }
+    await req.user.save();
+    await interest.save();
+    res.json({ success: true });
   } catch (err) {
     const error = new Error(err);
     error.httpStatusCode = 500;

@@ -94,7 +94,7 @@ main {
 #interestsArea {
   padding: 0.5rem;
   width: 20%;
-  height: 40vh;
+  height: max-content;
   background: darken($light-color, 5);
   margin: 0.5rem 1.5rem;
   border-radius: 0.2rem;
@@ -117,7 +117,7 @@ main {
     text-transform: capitalize;
     align-items: center;
 
-    #name {
+    #category {
       padding: 0.2rem 0.2rem;
       height: 1.8rem;
       font-size: 1.1rem;
@@ -127,6 +127,15 @@ main {
       height: 1.8rem;
       border-radius: 0.3rem;
       background-color: lighten($primary-color, 5);
+      text-transform: capitalize;
+      font-weight: bold;
+      color: $light-color;
+    }
+    .followed{
+      width: 6rem;
+      height: 1.8rem;
+      border-radius: 0.3rem;
+      background-color: lighten($success-color, 15);
       text-transform: capitalize;
       font-weight: bold;
       color: $light-color;

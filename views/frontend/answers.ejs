@@ -30,33 +30,35 @@
                             </span>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <form action="" method="get">
-                            <input type="text" placeholder="Add Your Answer Here">
-                            <button type="submit" class=" btn-primary"><i class="fas fa-sign-in-alt "></i>
-                                Add</button>
-                        </form>
+                    <div id="answerSec">
+                        <div class="form-group">
+                            <label for="answer">Add Your Answer</label>
+                            <textarea type="text" id="answer" name="answer" placeholder="Add Your Answer Here" rows="10"
+                                cols="10"></textarea>
+                            <small class="text-danger hide"></small>
+                        </div>
+                        <input type="hidden" name="quesId" id="quesId" value="<%=ques._id%>">
+                        <input type="hidden" name="_csrf" id="_csrf" value="<%= csrfToken %>">
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt "></i>
+                            Add</button>
                     </div>
                 </div>
-
+                
                 <div id="interestsArea">
                     <div class="heading"><span class="text-center">Some Categories you might like</span></div>
+                    <%for(const i of interest){%>
                     <div class="interests text-left bg-light">
-                        <label id="name">development</label>
+                        <label id="category" name="category"><%=i.category%></label>
+                        <input type="hidden" name="interestId" id="interestId" value="<%=i._id%>">
                         <button class="follow ">follow <i class="fas fa-user-plus"></i></button>
+                        <button class="followed hide ">followed <i class="far fa-check-circle"></i></button>
                     </div>
-                    <div class="interests text-left bg-light">
-                        <label id="name">development</label>
-                        <button class="follow">follow <i class="fas fa-user-plus"></i></button>
-                    </div>
-                    <div class="interests text-left bg-light">
-                        <label id="name">development</label>
-                        <button class="follow">follow <i class="fas fa-user-plus"></i></button>
-                    </div>
+                    <%}%>
                 </div>
             </main>
             <%- include('../includes/footer.ejs')%>
-
+                <script src="/frontend/js/answer.js"></script>
+                <script src="/frontend/js/follow.js"></script>
     </body>
 
     </html>

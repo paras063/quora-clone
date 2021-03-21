@@ -108,7 +108,6 @@ exports.findSubInterest = async (req, res, next) => {
         _id: e._id,
       };
     });
-    console.log(subInterestColl);
     res.json({ subInterestColl });
   } catch (err) {
     const error = new Error(err);

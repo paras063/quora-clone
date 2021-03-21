@@ -10,6 +10,7 @@ const interestSchema = new mongoose.Schema(
     },
     following: {
       type: Number,
+      default : 0,
     },
   },
   {

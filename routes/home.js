@@ -11,5 +11,6 @@ router.get('/', homeController.getHome);
 router.get('/search', homeController.searchQuery);
 router.get('/bookmark/:quesId', auth.isAuth, homeController.bookmarkQues);
 router.get('/question/:quesId', auth.isAuth, homeController.viewQues);
+router.get('/follow-interest/:interestId',auth.isAuth,homeController.followInterest);
 
 module.exports = router;

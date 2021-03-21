@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema(
     doj: { type: Date, required: true, default: Date.now() },
     interestAreas: [
       {
-        interest: { type: mongoose.Schema.Types.ObjectId, ref: 'Interest' },
+        interestId: { type: mongoose.Schema.Types.ObjectId, ref: 'Interest' },
       },
     ],
     bookmarks: [

@@ -1,14 +1,14 @@
 /* -------- Models Import -------- */
-const Ques = require('../models/question');
-const subInterest = require('../models/subCategory');
-const { getSubInterestArr, filteredTagsInput } = require('../util/file');
-const { validationResult } = require('express-validator');
+const Ques = require("../models/question");
+const subInterest = require("../models/subCategory");
+const { getSubInterestArr, filteredTagsInput } = require("../util/file");
+const { validationResult } = require("express-validator");
 
 exports.getAddQues = async (req, res, next) => {
   try {
-    res.render('frontend/ques', {
-      pageTitle: 'Add Question',
-      path: '/',
+    res.render("frontend/ques", {
+      pageTitle: "Add Question",
+      path: "/",
       oldInput: null,
       subInterestArr: await getSubInterestArr(),
     });
@@ -54,13 +54,12 @@ exports.postAddQues = async (req, res, next) => {
   }
 };
 
-
 //user view his own questions
 exports.viewAllQues = async (req, res) => {
   try {
     const showQues = await Ques.find({ owner: req.user._id });
     if (!showQues) {
-      console.log('not found');
+      console.log("not found");
     } else {
       console.log(showQues);
     }
@@ -69,15 +68,13 @@ exports.viewAllQues = async (req, res) => {
   }
 };
 
-
-
 //user update particular question
 exports.updateQues = async (req, res) => {
   const updates = Object.keys(req.body);
-  const allowedFields = ['question', 'category'];
+  const allowedFields = ["question", "category"];
   const updateValid = updates.every((data) => allowedFields.includes(data));
   if (!updateValid) {
-    return console.log('not allowed');
+    return console.log("not allowed");
   }
   try {
     const updateQues = await Ques.findOne({
@@ -86,7 +83,7 @@ exports.updateQues = async (req, res) => {
     });
 
     if (!updateQues) {
-      console.log('failed to found');
+      console.log("failed to found");
     } else {
       updates.forEach((update) => (updateQues[update] = req.body[update]));
       await updateQues.save();
@@ -106,9 +103,9 @@ exports.deleteQues = async (req, res) => {
     });
 
     if (!ques) {
-      console.log('not found');
+      console.log("not found");
     } else {
-      console.log('done', ques);
+      console.log("done", ques);
     }
   } catch (err) {
     console.log(err);
@@ -128,3 +125,26 @@ exports.deleteQues = async (req, res) => {
 //     console.log(err);
 //   }
 // };
+
+//add answer
+exports.addAnswer = async (req, res, next) => {
+  try {
+    const quesId = req.body.quesId;
+    const answer = req.body.answer;
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.json({ success: false, errors: errors.array()[0].msg });
+    }
+
+    const ques = await Ques.findById(quesId);    
+    ques.answers.push({ ans: answer });
+    const result = await ques.save();    
+    res.json({ success: true, addedAns: result.answers[result.answers.length - 1] });
+    
+  } catch (err) {
+    const error = new Error(err);
+    error.httpStatusCode = 500;
+    return next(error);
+  }
+};
